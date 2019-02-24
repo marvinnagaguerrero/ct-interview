@@ -6,4 +6,5 @@
         public string AsxCode { get; set; }
         public string GicsIndustryGroup { get; set; }
     }
+
 }

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using Ct.Interview.Web.Api.Profiles;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,11 +28,19 @@ namespace Ct.Interview.Web.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddScoped<IAsxListedCompaniesService, AsxListedCompaniesService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            Mapper.Initialize(x =>
+            {
+                x.AddProfile<MappingProfile>();
+            });
+            Mapper.Configuration.AssertConfigurationIsValid();
+
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
